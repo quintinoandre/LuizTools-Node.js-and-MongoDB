@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= title %></title>
+		<link rel="stylesheet" href="/stylesheets/style.css" />
+	</head>
+	<body>
+		<h1><%= title %></h1>
+		<p>Welcome to <%= title %></p>
+		<table>
+			<tr>
+				<td>Marca</td>
+				<td>Modelo</td>
+				<td>Ano</td>
+			</tr>
+      <% for(let i=0; i<carros.length; i++){%>
+      <tr> 
+      <td><%=carros[i].marca%></td>
+      <td><%=carros[i].modelo%></td>
+      <td><%=carros[i].ano%></td>
+      </tr>
+      <% }%>
+		</table>
+      <a href="/cadastro">Cadastrar Novo</a>
+	</body>
+</html>
