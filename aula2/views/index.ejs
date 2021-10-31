@@ -20,10 +20,16 @@
 			<tbody>
 				<% customers.forEach(item=>{ %>
 				<tr>
-					<td><%= item.name %></td>
+					<td>
+						<a href="/edit/<%= item._id %>" title="Edit"><%= item.name %></a>
+					</td>
 					<td><%= item.age %></td>
 					<td><%= item.city %> <%= item.state %></td>
-					<td></td>
+					<td>
+						<a href="/edit/<%= item._id %>" title="Edit">
+							<img src="/images/edit.png" />
+						</a>
+					</td>
 				</tr>
 				<% }) %>
 			</tbody>

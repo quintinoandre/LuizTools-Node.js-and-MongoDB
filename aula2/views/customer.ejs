@@ -9,17 +9,22 @@
 		<form action="/new" method="POST">
 			<fieldset>
 				<legend>Registration Data</legend>
-				<p>Name: <input type="text" name="name" /></p>
-				<p>Age: <input type="number" name="age" /></p>
 				<p>
-					Region: <input type="text" name="city" />
-					<select name="state">
+					Name: <input type="text" name="name" value="<%= customer.name %>" />
+				</p>
+				<p>
+					Age: <input type="number" name="age" value="<%= customer.age %>" />
+				</p>
+				<p>
+					Region: <input type="text" name="city" value="<%= customer.city %>" />
+					<select id="state" name="state">
 						<option>Select the state</option>
 						<option>RS</option>
 						<option>SC</option>
 						<option>PR</option>
 					</select>
 				</p>
+				<input type="hidden" name="id" value="<%= customer._id %>" />
 				<p>
 					<input type="submit" value="Salvar" />
 					<a href="/">Cancelar</a>
@@ -32,6 +37,20 @@
 
 				alert(decodeURI(error));
 			}
+
+			         <%
+
+			         if(customer.state) {
+
+			             %>
+
+			             document.getElementById("state").value = "<%= customer.state %>"
+
+			             <%
+
+			         }
+
+			         %>
 		</script>
 	</body>
 </html>

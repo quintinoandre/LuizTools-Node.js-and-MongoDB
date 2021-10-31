@@ -24,6 +24,12 @@ const findCustomers = () => {
 	return global.connection.collection('customers').find({}).toArray();
 };
 
+const findCustomer = (id) => {
+	const objectId = new ObjectId(id);
+
+	return global.connection.collection('customers').findOne({ _id: objectId });
+};
+
 const insertCustomer = (customer) => {
 	return global.connection.collection('customers').insertOne(customer);
 };
@@ -47,4 +53,5 @@ module.exports = {
 	insertCustomer,
 	updateCustomer,
 	deleteCustomer,
+	findCustomer,
 };
