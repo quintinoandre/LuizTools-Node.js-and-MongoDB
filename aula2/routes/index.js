@@ -22,4 +22,8 @@ router.get('/', (req, res, next) => {
 		.catch((error) => console.log(error));
 });
 
+router.get('/new', (request, response) => {
+	response.render('customer', { title: 'Customer Registration' });
+});
+
 module.exports = router;
