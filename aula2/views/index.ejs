@@ -7,11 +7,26 @@
 	<body>
 		<h1><%= title %></h1>
 		<p>Welcome to <%= title %></p>
-		<p><%= customers.length %> clientes cadastrados!</p>
-		<ul>
-			<% customers.forEach(item=>{ %>
-			<li><%= item.name %></li>
-			<% }) %>
-		</ul>
+		<p><%= customers.length %> registered customers!</p>
+		<table>
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Age</td>
+					<td>Region</td>
+					<td>Actions</td>
+				</tr>
+			</thead>
+			<tbody>
+				<% customers.forEach(item=>{ %>
+				<tr>
+					<td><%= item.name %></td>
+					<td><%= item.age %></td>
+					<td><%= item.city %> <%= item.state %></td>
+					<td></td>
+				</tr>
+				<% }) %>
+			</tbody>
+		</table>
 	</body>
 </html>
