@@ -5,8 +5,8 @@
 	</head>
 	<body>
 		<h1><% title %></h1>
-		<p>Fill in the fields below to register a customer.</p>
-		<form>
+		<p>Fill the fields below to register a customer.</p>
+		<form action="/new" method="POST">
 			<fieldset>
 				<legend>Registration Data</legend>
 				<p>Name: <input type="text" name="name" /></p>
@@ -14,6 +14,7 @@
 				<p>
 					Region: <input type="text" name="city" />
 					<select name="state">
+						<option>Select the state</option>
 						<option>RS</option>
 						<option>SC</option>
 						<option>PR</option>
@@ -25,5 +26,12 @@
 				</p>
 			</fieldset>
 		</form>
+		<script>
+			if (window.location.search) {
+				const error = window.location.search.split('=')[1];
+
+				alert(decodeURI(error));
+			}
+		</script>
 	</body>
 </html>
