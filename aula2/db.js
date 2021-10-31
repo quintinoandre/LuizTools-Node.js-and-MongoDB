@@ -14,4 +14,17 @@ mongoClient.connect(
 	}
 );
 
-module.exports = {};
+/* const findCustomers = (callback) => {
+	return global.connection
+		.collection('customers')
+		.find({})
+		.toArray((error, docs) => {
+			callback(error, docs);
+		});
+}; */
+
+const findCustomers = () => {
+	return global.connection.collection('customers').find({}).toArray();
+};
+
+module.exports = { findCustomers };
