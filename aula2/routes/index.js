@@ -17,8 +17,7 @@ const { findCustomers } = require('../db');
 router.get('/', (req, res, next) => {
 	findCustomers()
 		.then((customers) => {
-			console.log(customers);
-			res.render('index', { title: 'Express' });
+			res.render('index', { title: 'Express', customers });
 		})
 		.catch((error) => console.log(error));
 });

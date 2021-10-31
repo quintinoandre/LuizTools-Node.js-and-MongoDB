@@ -1,18 +1,14 @@
 //db.js
 const mongoClient = require('mongodb').MongoClient;
 
-mongoClient.connect(
-	'mongodb://localhost:27017',
-	{ useUnifiedTopology: true },
-	(error, connection) => {
-		if (error) return console.log(error);
-		else {
-			global.connection = connection.db('aula02');
+mongoClient
+	.connect('mongodb://localhost:27017', { useUnifiedTopology: true })
+	.then((connection) => {
+		global.connection = connection.db('aula02');
 
-			console.log('Connected');
-		}
-	}
-);
+		console.log('Connected to MongoDB!');
+	})
+	.catch((error) => console.log(error));
 
 /* const findCustomers = (callback) => {
 	return global.connection
