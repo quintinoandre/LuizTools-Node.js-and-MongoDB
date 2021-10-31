@@ -5,6 +5,7 @@ const {
 	insertCustomer,
 	findCustomer,
 	updateCustomer,
+	deleteCustomer,
 } = require('../db');
 
 /* GET home page. */
@@ -38,6 +39,14 @@ router.get('/edit/:customerId', ({ params }, response) => {
 		.then((customer) =>
 			response.render('customer', { title: 'Registration Edition', customer })
 		)
+		.catch((error) => console.log(error));
+});
+
+router.get('/delete/:customerId', ({ params }, response) => {
+	const { customerId: id } = params;
+
+	deleteCustomer(id)
+		.then((result) => response.redirect('/'))
 		.catch((error) => console.log(error));
 });
 
