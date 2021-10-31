@@ -8,5 +8,10 @@
 		<h1><%= title %></h1>
 		<p>Welcome to <%= title %></p>
 		<p><%= customers.length %> clientes cadastrados!</p>
+		<ul>
+			<% customers.forEach(item=>{ %>
+			<li><%= item.name</li>
+			<% }) %>
+		</ul>
 	</body>
 </html>
