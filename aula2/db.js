@@ -1,4 +1,5 @@
 //db.js
+const ObjectId = require('mongodb').ObjectId;
 const mongoClient = require('mongodb').MongoClient;
 
 mongoClient
@@ -23,4 +24,27 @@ const findCustomers = () => {
 	return global.connection.collection('customers').find({}).toArray();
 };
 
-module.exports = { findCustomers };
+const insertCustomer = (customer) => {
+	return global.connection.collection('customers').insertOne(customer);
+};
+
+const updateCustomer = (id, customer) => {
+	const objectId = new ObjectId(id);
+
+	return global.connection
+		.collection('customers')
+		.updateOne({ _id: objectId }, { $set: customer });
+};
+
+const deleteCustomer = (id) => {
+	const objectId = new ObjectId(id);
+
+	return global.connection.collection('customers').deleteOne({ _id: objectId });
+};
+
+module.exports = {
+	findCustomers,
+	insertCustomer,
+	updateCustomer,
+	deleteCustomer,
+};
