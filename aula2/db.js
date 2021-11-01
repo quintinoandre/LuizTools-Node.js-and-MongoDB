@@ -2,8 +2,10 @@
 const ObjectId = require('mongodb').ObjectId;
 const mongoClient = require('mongodb').MongoClient;
 
+const { MONGODB_CONNECTION } = process.env;
+
 mongoClient
-	.connect('mongodb://localhost:27017', { useUnifiedTopology: true })
+	.connect(MONGODB_CONNECTION, { useUnifiedTopology: true })
 	.then((connection) => {
 		global.connection = connection.db('aula02');
 

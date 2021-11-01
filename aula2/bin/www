@@ -9,11 +9,13 @@ const debug = require('debug')('aula2:server');
 const http = require('http');
 require('../db');
 
+const { PORT } = process.env;
+
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(PORT || '3000');
 app.set('port', port);
 
 /**
