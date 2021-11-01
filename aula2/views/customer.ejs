@@ -19,9 +19,6 @@
 					Region: <input type="text" name="city" value="<%= customer.city %>" />
 					<select id="state" name="state">
 						<option>Select the state</option>
-						<option>RS</option>
-						<option>SC</option>
-						<option>PR</option>
 					</select>
 				</p>
 				<input type="hidden" name="id" value="<%= customer._id %>" />
@@ -32,25 +29,42 @@
 			</fieldset>
 		</form>
 		<script>
+			fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+				.then((response) => response.json())
+				.then((json) => {
+					const statesHtml = document.getElementById('state');
+
+					const siglas = json.map((item) => item.sigla).sort();
+
+					siglas.forEach((item) => {
+						const opt = document.createElement('option');
+
+						opt.innerText = item;
+
+						statesHtml.add(opt);
+					});
+
+					<%
+
+						         if (customer.state) {
+
+						             %>
+
+						             statesHtml.value = "<%= customer.state %>"
+
+						             <%
+
+						         }
+
+						         %>
+				})
+				.catch((error) => alert(error));
+
 			if (window.location.search) {
 				const error = window.location.search.split('=')[1];
 
 				alert(decodeURI(error));
 			}
-
-			         <%
-
-			         if (customer.state) {
-
-			             %>
-
-			             document.getElementById("state").value = "<%= customer.state %>"
-
-			             <%
-
-			         }
-
-			         %>
 		</script>
 	</body>
 </html>
