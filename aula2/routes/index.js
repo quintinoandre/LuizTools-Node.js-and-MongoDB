@@ -25,7 +25,11 @@ router.get('/', (req, res, next) => {
 		.then((customers) => {
 			res.render('index', { title: 'Express', customers });
 		})
-		.catch((error) => console.log(error));
+		.catch((error) => {
+			console.log(error);
+
+			res.render('error', { message: 'Unable to list customers!', error });
+		});
 });
 
 router.get('/new', (request, response) => {
@@ -39,7 +43,14 @@ router.get('/edit/:customerId', ({ params }, response) => {
 		.then((customer) =>
 			response.render('customer', { title: 'Registration Edition', customer })
 		)
-		.catch((error) => console.log(error));
+		.catch((error) => {
+			console.log(error);
+
+			res.render('error', {
+				message: 'Unable to return customer data!',
+				error,
+			});
+		});
 });
 
 router.get('/delete/:customerId', ({ params }, response) => {
@@ -47,7 +58,14 @@ router.get('/delete/:customerId', ({ params }, response) => {
 
 	deleteCustomer(id)
 		.then((result) => response.redirect('/'))
-		.catch((error) => console.log(error));
+		.catch((error) => {
+			console.log(error);
+
+			res.render('error', {
+				message: 'Unable to delete customer!',
+				error,
+			});
+		});
 });
 
 router.post('/new', ({ body }, response) => {
@@ -69,7 +87,14 @@ router.post('/new', ({ body }, response) => {
 
 	promise
 		.then((result) => response.redirect('/'))
-		.catch((error) => console.log(error));
+		.catch((error) => {
+			console.log(error);
+
+			res.render('error', {
+				message: 'Unable to save customer!',
+				error,
+			});
+		});
 });
 
 module.exports = router;
