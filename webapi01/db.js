@@ -14,6 +14,8 @@ const insertUser = (user) => {
 	user.id = generateId();
 
 	global.users.push(user);
+
+	return user;
 };
 
 const updateUser = (id, user) => {
