@@ -4,11 +4,17 @@ const fs = require('fs');
 const FILE_PATH = require('path').join(__dirname, 'users.json');
 
 const findUsers = () => {
-	try {
+	if (!fs.existsSync(FILE_PATH)) return [];
+
+	const rawData = fs.readFileSync(FILE_PATH);
+
+	return JSON.parse(rawData);
+
+	/* try {
 		return require('./users.json');
 	} catch (ex) {
 		return [];
-	}
+	} */
 };
 
 const findUser = (id) => {
@@ -27,20 +33,23 @@ const insertUser = (user) => {
 	return user;
 };
 
-const updateUser = (id, user) => {
+const updateUser = (id, user, overwrite) => {
 	const users = findUsers();
 
-	users.forEach((item, index, array) => {
-		if (item.id === id) {
-			user.id = id;
+	const index = users.findIndex((item) => item.id === id);
 
-			array[index] = user;
+	if (index === -1) return {};
+
+	if (overwrite) users[index] = user;
+	else {
+		for (let key in user) {
+			users[index][key] = user[key];
 		}
-	});
+	}
 
 	fs.writeFileSync(FILE_PATH, JSON.stringify(users));
 
-	return user;
+	return users[index];
 };
 
 const deleteUser = (id) => {
