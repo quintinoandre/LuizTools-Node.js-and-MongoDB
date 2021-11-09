@@ -6,7 +6,8 @@ const {
 	updateUser,
 	deleteUser,
 	findUser,
-} = require('../db');
+} = require('../models/db');
+const userSchema = require('../models/userSchema');
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
@@ -20,6 +21,10 @@ router.get('/:id', ({ params }, response) => {
 });
 
 router.post('/', ({ body }, response) => {
+	const { error } = userSchema.validate(body);
+
+	if (error) return response.status(422).json({ error: error.details }); //! Unprocessable Entity
+
 	const user = insertUser(body);
 
 	response.status(201).json(user); //* Create
