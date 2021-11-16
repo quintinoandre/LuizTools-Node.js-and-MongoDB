@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const validationMiddleware = require('../middlewares/validationMiddleware');
 const {
 	findUsers,
 	insertUser,
@@ -7,15 +8,6 @@ const {
 	deleteUser,
 	findUser,
 } = require('../models/db');
-const userSchema = require('../models/userSchema');
-
-httpMethods = {
-	GET: 'GET',
-	POST: 'POST',
-	PUT: 'PUT',
-	PATCH: 'PATCH',
-	DELETE: 'DELETE',
-};
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
@@ -27,22 +19,6 @@ router.get('/:id', ({ params }, response) => {
 
 	response.json(findUser(id)); //* OK
 });
-
-const validationMiddleware = ({ body, method }, response, next) => {
-	const { POST, PUT } = httpMethods;
-
-	if ([POST, PUT].includes(method)) {
-		if (!body.name || !body.age)
-			return response.status(422).json({ error: 'name and age are required!' });
-		//! Unprocessable Entity
-	}
-
-	const { error } = userSchema.validate(body);
-
-	if (error) return response.status(422).json({ error: error.details });
-	//! Unprocessable Entity
-	else next();
-};
 
 router.post('/', validationMiddleware, ({ body }, response) => {
 	const user = insertUser(body);
