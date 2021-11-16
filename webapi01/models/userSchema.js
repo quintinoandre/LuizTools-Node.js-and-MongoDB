@@ -1,9 +1,9 @@
 const Joi = require('joi');
 
 module.exports = Joi.object({
-	name: Joi.string().min(5).max(150).required(),
+	name: Joi.string().min(5).max(150),
 
-	age: Joi.number().integer().min(18).required(),
+	age: Joi.number().integer().min(18),
 
 	uf: Joi.string().length(2),
 
