@@ -1,7 +1,7 @@
 const { v4: generateId } = require('uuid');
 const fs = require('fs');
 
-const FILE_PATH = require('path').join(__dirname, 'keys.json');
+const FILE_PATH = require('path').join(__dirname, '..', 'data', 'keys.json');
 
 function findKeys() {
 	if (!fs.existsSync(FILE_PATH)) return [];
