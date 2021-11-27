@@ -1,6 +1,6 @@
-const makePerson = (name, age) => {
+function makePerson(name, age) {
 	return { name, age };
-};
+}
 
 persons = [];
 

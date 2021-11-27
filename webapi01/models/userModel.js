@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const FILE_PATH = require('path').join(__dirname, 'users.json');
 
-const findUsers = () => {
+function findUsers() {
 	if (!fs.existsSync(FILE_PATH)) return [];
 
 	const rawData = fs.readFileSync(FILE_PATH);
@@ -15,13 +15,13 @@ const findUsers = () => {
 	} catch (ex) {
 		return [];
 	} */
-};
+}
 
-const findUser = (id) => {
+function findUser(id) {
 	return findUsers().find((item) => item.id === id);
-};
+}
 
-const insertUser = (user) => {
+function insertUser(user) {
 	const users = findUsers();
 
 	user.id = generateId();
@@ -31,9 +31,9 @@ const insertUser = (user) => {
 	fs.writeFileSync(FILE_PATH, JSON.stringify(users));
 
 	return user;
-};
+}
 
-const updateUser = (id, user, overwrite) => {
+function updateUser(id, user, overwrite) {
 	const users = findUsers();
 
 	const index = users.findIndex((item) => item.id === id);
@@ -50,9 +50,9 @@ const updateUser = (id, user, overwrite) => {
 	fs.writeFileSync(FILE_PATH, JSON.stringify(users));
 
 	return users[index];
-};
+}
 
-const deleteUser = (id) => {
+function deleteUser(id) {
 	const users = findUsers();
 
 	users.forEach((item, index, array) => {
@@ -64,6 +64,6 @@ const deleteUser = (id) => {
 	fs.writeFileSync(FILE_PATH, JSON.stringify(users));
 
 	return id;
-};
+}
 
 module.exports = { findUsers, findUser, insertUser, updateUser, deleteUser };

@@ -7,7 +7,7 @@ const {
 	updateUser,
 	deleteUser,
 	findUser,
-} = require('../models/db');
+} = require('../models/userModel');
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
