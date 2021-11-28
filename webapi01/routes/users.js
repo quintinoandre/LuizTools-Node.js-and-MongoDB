@@ -1,18 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const validationMiddleware = require('../middlewares/validationMiddleware');
-const {
-	findUsers,
-	insertUser,
-	updateUser,
-	deleteUser,
-	findUser,
-} = require('../models/userModel');
+const { getUsers } = require('../controllers/userController');
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
-	res.json(findUsers()); //* OK
-});
+router.get('/', getUsers);
 
 router.get('/:id', ({ params }, response) => {
 	const { id } = params;
