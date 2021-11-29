@@ -1,4 +1,4 @@
-const { MongoClient } = requite('mongodb');
+const { MongoClient } = require('mongodb');
 
 let client = null;
 
