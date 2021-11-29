@@ -1,45 +1,26 @@
+const {
+	getUsers,
+	getUserById,
+	postUser,
+	putUser,
+	patchUser,
+	deleteUser,
+} = require('../controllers/userController');
 const express = require('express');
 const router = express.Router();
 const validationMiddleware = require('../middlewares/validationMiddleware');
-const { getUsers } = require('../controllers/userController');
 
 /* GET users listing. */
 router.get('/', getUsers);
 
-router.get('/:id', ({ params }, response) => {
-	const { id } = params;
+router.get('/:id', getUserById);
 
-	response.json(findUser(id)); //* OK
-});
+router.post('/', validationMiddleware, postUser);
 
-router.post('/', validationMiddleware, ({ body }, response) => {
-	const user = insertUser(body);
+router.put('/:id', validationMiddleware, putUser);
 
-	response.status(201).json(user); //* Create
-});
+router.patch('/:id', patchUser);
 
-router.put('/:id', validationMiddleware, ({ params, body }, response) => {
-	const { id } = params;
-
-	const user = updateUser(id, body, true);
-
-	response.status(200).json(user); //* OK
-});
-
-router.patch('/:id', ({ params, body }, response) => {
-	const { id } = params;
-
-	const user = updateUser(id, body, false);
-
-	response.status(200).json(user); //* OK
-});
-
-router.delete('/:id', ({ params, body }, response) => {
-	const { id } = params;
-
-	const user = deleteUser(id);
-
-	response.status(200).json(user); //* OK
-});
+router.delete('/:id', deleteUser);
 
 module.exports = router;
