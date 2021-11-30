@@ -12,3 +12,11 @@ test('Disconnecting Database', async () => {
 
 	expect(isDisconnected).toBeTruthy();
 });
+
+test('Disconnecting Database 2x', async () => {
+	await database.disconnect();
+
+	const isDisconnected = await database.disconnect();
+
+	expect(isDisconnected).toBeTruthy();
+});
