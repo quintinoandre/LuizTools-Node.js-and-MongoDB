@@ -26,4 +26,4 @@ async function getMoviesPremieres() {
 		.toArray();
 }
 
-module.exports = (getAllMovies, getMovieById, getMoviesPremieres);
+module.exports = { getAllMovies, getMovieById, getMoviesPremieres };
