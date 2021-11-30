@@ -2,8 +2,6 @@ module.exports = (app, { getMoviesPremieres, getMovieById, getAllMovies }) => {
 	app.get('/movies/premieres', async (rep, res, next) => {
 		const movies = await getMoviesPremieres();
 
-		if (!movies || !movies.length) return res.sendStatus(404); //! Not Found
-
 		res.json(movies);
 	});
 
@@ -19,8 +17,6 @@ module.exports = (app, { getMoviesPremieres, getMovieById, getAllMovies }) => {
 
 	app.get('/movies', async (req, res, next) => {
 		const movies = await getAllMovies();
-
-		if (!movies || !movies.length) return res.sendStatus(404); //! Not Found
 
 		res.json(movies);
 	});
