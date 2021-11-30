@@ -2,11 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 
-const { PORT, MS_NAME } = process.env;
+const { MS_NAME } = process.env;
 
 let server = null;
 
-async function start() {
+async function start(api, repository) {
 	const app = express();
 
 	app.use(helmet());
@@ -14,8 +14,10 @@ async function start() {
 	app.use(morgan('dev'));
 
 	app.get('/health', (req, res, next) => {
-		res.send(`The service ${MS_NAME} is running at ${PORT}`);
+		res.send(`The service ${MS_NAME} is running at ${process.env.PORT}`);
 	});
+
+	api(app, repository);
 
 	app.use((error, req, res, next) => {
 		console.error(error);
@@ -23,8 +25,10 @@ async function start() {
 		res.sendStatus(500); //! Internal Server Error
 	});
 
-	server = app.listen(PORT, () => {
-		console.log(`The service ${MS_NAME} already started at ${PORT}!`);
+	server = app.listen(process.env.PORT, () => {
+		console.log(
+			`The service ${MS_NAME} already started at ${process.env.PORT}!`
+		);
 	});
 
 	return server;

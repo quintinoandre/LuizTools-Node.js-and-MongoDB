@@ -1,14 +1,18 @@
 const { start, stop } = require('./server');
 const request = require('supertest');
 
+const apiMock = jest.fn((app, repository) => true);
+
 test('Server Start', async () => {
-	const app = await start();
+	const app = await start(apiMock);
 
 	expect(app).toBeTruthy();
 });
 
 test('Health Check', async () => {
-	const app = await start();
+	process.env.PORT = 3001;
+
+	const app = await start(apiMock);
 
 	const response = await request(app).get('/health');
 
