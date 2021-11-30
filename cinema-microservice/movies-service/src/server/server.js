@@ -13,7 +13,7 @@ async function start() {
 
 	app.use(morgan('dev'));
 
-	app.get('/heath', (req, res, next) => {
+	app.get('/health', (req, res, next) => {
 		res.send(`The service ${MS_NAME} is running at ${PORT}`);
 	});
 
@@ -26,6 +26,8 @@ async function start() {
 	server = app.listen(PORT, () => {
 		console.log(`The service ${MS_NAME} already started at ${PORT}!`);
 	});
+
+	return server;
 }
 
 async function stop() {
