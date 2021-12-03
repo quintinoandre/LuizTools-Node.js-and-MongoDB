@@ -1,6 +1,4 @@
-const { ObjectId } = require('mongodb');
-
-const cinemaCatalog = [
+[
 	{
 		cidade: 'Gravataí',
 		uf: 'RS',
@@ -12,15 +10,15 @@ const cinemaCatalog = [
 		pais: 'BR',
 		cinemas: [
 			{
-				_id: new ObjectId('61a5286bf8943f587e1e01df'),
+				_id: ObjectId(),
 				nome: 'Cinemark Bourbon Ipiranga',
 				salas: [
 					{
 						nome: 1,
 						sessoes: [
 							{
-								data: new Date('2021-12-03T09:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01df'),
+								data: ISODate('2021-12-03T09:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01df'),
 								filme: 'Vingadores: Guerra Infinita',
 								valor: 25.0,
 								assentos: [
@@ -35,8 +33,8 @@ const cinemaCatalog = [
 								],
 							},
 							{
-								data: new Date('2021-12-03T11:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01df'),
+								data: ISODate('2021-12-03T11:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01df'),
 								filme: 'Vingadores: Guerra Infinita',
 								valor: 25.0,
 								assentos: [
@@ -51,8 +49,8 @@ const cinemaCatalog = [
 								],
 							},
 							{
-								data: new Date('2021-12-03T13:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01e0'),
+								data: ISODate('2021-12-03T13:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01e0'),
 								filme: 'Vingadores: Era de Ultron',
 								valor: 20.0,
 								assentos: [
@@ -76,8 +74,8 @@ const cinemaCatalog = [
 						nome: 2,
 						sessoes: [
 							{
-								data: new Date('2021-12-03T09:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01e0'),
+								data: ISODate('2021-12-03T09:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01e0'),
 								filme: 'Vingadores: Era de Ultron',
 								valor: 25.0,
 								assentos: [
@@ -92,8 +90,8 @@ const cinemaCatalog = [
 								],
 							},
 							{
-								data: new Date('2021-12-03T11:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01de'),
+								data: ISODate('2021-12-03T11:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01de'),
 								filme: 'Vingadores: Ultimato',
 								valor: 25.0,
 								assentos: [
@@ -108,8 +106,8 @@ const cinemaCatalog = [
 								],
 							},
 							{
-								data: new Date('2021-12-03T13:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01de'),
+								data: ISODate('2021-12-03T13:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01de'),
 								filme: 'Vingadores: Ultimato',
 								valor: 20.0,
 								assentos: [
@@ -132,15 +130,15 @@ const cinemaCatalog = [
 				],
 			},
 			{
-				_id: new ObjectId(),
+				_id: ObjectId(),
 				nome: 'GNC Lindóia',
 				salas: [
 					{
 						nome: 100,
 						sessoes: [
 							{
-								data: new Date('2021-12-03T19:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01de'),
+								data: ISODate('2021-12-03T19:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01de'),
 								filme: 'Vingadores: Ultimato',
 								valor: 25.0,
 								assentos: [
@@ -155,8 +153,8 @@ const cinemaCatalog = [
 								],
 							},
 							{
-								data: new Date('2021-12-03T11:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01de'),
+								data: ISODate('2021-12-03T11:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01de'),
 								filme: 'Vingadores: Ultimato',
 								valor: 25.0,
 								assentos: [
@@ -171,8 +169,8 @@ const cinemaCatalog = [
 								],
 							},
 							{
-								data: new Date('2021-12-03T13:00:00Z'),
-								idFilme: new ObjectId('61a5286bf8943f587e1e01e0'),
+								data: ISODate('2021-12-03T13:00:00Z'),
+								idFilme: ObjectId('61a5286bf8943f587e1e01e0'),
 								filme: 'Vingadores: Era de Ultron',
 								valor: 20.0,
 								assentos: [
@@ -197,63 +195,3 @@ const cinemaCatalog = [
 		],
 	},
 ];
-
-function getAllCities() {
-	return cinemaCatalog.map(({ pais, uf, cidade }) => {
-		return {
-			_id: new ObjectId('61a5286bf8943f587e1e01e0'),
-			pais,
-			uf,
-			cidade,
-		};
-	});
-}
-
-function getCinemaByCityId(cityId) {
-	if (cityId < 0) return [];
-
-	return cinemaCatalog[cinemaCatalog.length - 1].cinemas;
-}
-
-function getMoviesByCinemaId(cinemaId) {
-	if (cinemaId < 0) return [];
-
-	return getCinemaByCityId().map((cinema) => {
-		return {
-			titulo: cinema.salas[0].sessoes[0].filme,
-			_id: cinema.salas[0].sessoes[0].idFilme,
-		};
-	});
-}
-
-function getMoviesByCityId(cityId) {
-	return getMoviesByCinemaId(cityId);
-}
-
-function getMovieSessionsByCityId(movieId, cityId) {
-	if (movieId < 0 || cityId < 0) return [];
-
-	return getCinemaByCityId().map((cinema) => {
-		return {
-			titulo: cinema.salas[0].sessoes[0].filme,
-			_id: cinema.salas[0].sessoes[0].idFilme,
-			cinema: cinema.nome,
-			idCinema: cinema._id,
-			sala: cinema.salas[0].nome,
-			sessao: cinemas.salas[0].sessoes[0],
-		};
-	});
-}
-
-function getMovieSessionsByCinemaId(movieId, cinemaId) {
-	return getMovieSessionsByCityId(movieId, cinemaId);
-}
-
-module.exports = {
-	getAllCities,
-	getCinemaByCityId,
-	getMoviesByCinemaId,
-	getMoviesByCityId,
-	getMovieSessionsByCityId,
-	getMovieSessionsByCinemaId,
-};
