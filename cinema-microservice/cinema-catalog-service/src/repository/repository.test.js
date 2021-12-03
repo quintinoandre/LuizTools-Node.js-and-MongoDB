@@ -1,12 +1,21 @@
-const { getAllCities, getCinemaByCityId } = require('./repository');
+const {
+	getAllCities,
+	getCinemaByCityId,
+	getMoviesByCinemaId,
+} = require('./repository');
 const { test, expect } = require('@jest/globals');
 
 let cityId = null;
+let cinemaId = null;
 
 beforeAll(async () => {
 	const cities = await getAllCities();
 
-	cityId = cities[0]._id;
+	cityId = cities[cities.length - 1]._id;
+
+	const cinemas = await getCinemaByCityId(cityId);
+
+	cinemaId = cinemas[0]._id;
 });
 
 test('getAllCities', async () => {
@@ -18,11 +27,17 @@ test('getAllCities', async () => {
 });
 
 test('getCinemaByCityId', async () => {
-	const city = await getCinemaByCityId(cityId);
+	const cinemas = await getCinemaByCityId(cityId);
 
-	console.log(city);
+	expect(Array.isArray(cinemas)).toBeTruthy();
+});
 
-	expect(city).toBeTruthy();
+test('getMoviesByCinemaId', async () => {
+	const movies = await getMoviesByCinemaId(cinemaId);
 
-	expect(Array.isArray(city.cinemas)).toBeTruthy();
+	console.log(movies);
+
+	expect(Array.isArray(movies)).toBeTruthy();
+
+	expect(movies.length).toBeTruthy();
 });

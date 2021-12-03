@@ -18,7 +18,7 @@ const cinemaCatalog = [
 						sessoes: [
 							{
 								data: new Date('2021-12-03T09:00:00Z'),
-								idFilme: '61a5286bf8943f587e1e01df',
+								idFilme: new ObjectId('61a5286bf8943f587e1e01df'),
 								filme: 'Vingadores: Guerra Infinita',
 								valor: 25.0,
 								assentos: [
