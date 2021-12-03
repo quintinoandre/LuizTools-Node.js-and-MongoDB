@@ -1,23 +1,70 @@
-module.exports = (app, { getMoviesPremieres, getMovieById, getAllMovies }) => {
-	app.get('/movies/premieres', async (rep, res, next) => {
-		const movies = await getMoviesPremieres();
+module.exports = (
+	app,
+	{
+		getAllCities,
+		getMoviesByCityId,
+		getMovieSessionsByCityId,
+		getCinemaByCityId,
+		getMoviesByCinemaId,
+		getMovieSessionsByCinemaId,
+	}
+) => {
+	app.get('/cities', async (rep, res, next) => {
+		const cities = await getAllCities();
+
+		res.json(cities);
+	});
+
+	app.get('/cities/:cityId/movies', async ({ params }, res, next) => {
+		const { cityId } = params;
+
+		const movies = await getMoviesByCityId(cityId);
+
+		if (!movies) return res.sendStatus(404); //! Not Found
 
 		res.json(movies);
 	});
 
-	app.get('/movies/:id', async ({ params }, res, next) => {
-		const { id } = params;
+	app.get('/cities/:cityId/movies/:movieId', async ({ params }, res, next) => {
+		const { movieId, cityId } = params;
 
-		const movie = await getMovieById(id);
+		const sessions = await getMovieSessionsByCityId(movieId, cityId);
 
-		if (!movie) return res.sendStatus(404); //! Not Found
+		if (!sessions) return res.sendStatus(404); //! Not Found
 
-		res.json(movie);
+		res.json(sessions);
 	});
 
-	app.get('/movies', async (req, res, next) => {
-		const movies = await getAllMovies();
+	app.get('/cities/:cityId/cinemas', async ({ params }, res, next) => {
+		const { cityId } = params;
+
+		const cinemas = await getCinemaByCityId(cityId);
+
+		if (!cinemas) return res.sendStatus(404); //! Not Found
+
+		res.json(cinemas);
+	});
+
+	app.get('/cinemas/:cinemaId/movies', async ({ params }, res, next) => {
+		const { cinemaId } = params;
+
+		const movies = await getMoviesByCinemaId(cinemaId);
+
+		if (!movies) return res.sendStatus(404); //! Not Found
 
 		res.json(movies);
 	});
+
+	app.get(
+		'/cinemas/:cinemaId/movies/:movieId',
+		async ({ params }, res, next) => {
+			const { movieId, cinemaId } = params;
+
+			const sessions = await getMovieSessionsByCinemaId(movieId, cinemaId);
+
+			if (!sessions) return res.sendStatus(404); //! Not Found
+
+			res.json(sessions);
+		}
+	);
 };

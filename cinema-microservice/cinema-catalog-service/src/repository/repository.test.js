@@ -4,6 +4,7 @@ const {
 	getMoviesByCinemaId,
 	getMoviesByCityId,
 	getMovieSessionsByCityId,
+	getMovieSessionsByCinemaId,
 } = require('./repository');
 const { test, expect } = require('@jest/globals');
 
@@ -55,6 +56,14 @@ test('getMoviesByCityId', async () => {
 
 test('getMovieSessionsByCityId', async () => {
 	const moviesSessions = await getMovieSessionsByCityId(movieId, cityId);
+
+	expect(Array.isArray(moviesSessions)).toBeTruthy();
+
+	expect(moviesSessions.length).toBeTruthy();
+});
+
+test('getMovieSessionsByCinemaId', async () => {
+	const moviesSessions = await getMovieSessionsByCinemaId(movieId, cinemaId);
 
 	expect(Array.isArray(moviesSessions)).toBeTruthy();
 
