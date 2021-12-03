@@ -1,10 +1,14 @@
 const { connect } = require('../config/database');
 const { ObjectId } = require('mongodb');
 
-async function getAllMovies() {
+async function getAllCities() {
 	const db = await connect();
 
-	return db.collection('movies').find().toArray();
+	return db
+		.collection('cinemaCatalog')
+		.find({})
+		.project({ cidade: 1, uf: 1, pais: 1 })
+		.toArray();
 }
 
 async function getMovieById(id) {
@@ -26,4 +30,8 @@ async function getMoviesPremieres() {
 		.toArray();
 }
 
-module.exports = { getAllMovies, getMovieById, getMoviesPremieres };
+module.exports = {
+	getAllCities,
+	getMovieById,
+	getMoviesPremieres,
+};
