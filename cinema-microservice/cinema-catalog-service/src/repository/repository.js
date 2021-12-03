@@ -11,27 +11,14 @@ async function getAllCities() {
 		.toArray();
 }
 
-async function getMovieById(id) {
-	const db = await connect();
-
-	return db.collection('movies').findOne({ _id: new ObjectId(id) });
-}
-
-async function getMoviesPremieres() {
-	const monthAgo = new Date();
-
-	monthAgo.setMonth(-1);
+async function getCinemaByCityId(cityId) {
+	const objCityId = new ObjectId(cityId);
 
 	const db = await connect();
 
 	return db
-		.collection('movies')
-		.find({ dataLancamento: { $gte: monthAgo } })
-		.toArray();
+		.collection('cinemaCatalog')
+		.findOne({ _id: objCityId }, { projection: { cinemas: 1 } });
 }
 
-module.exports = {
-	getAllCities,
-	getMovieById,
-	getMoviesPremieres,
-};
+module.exports = { getAllCities, getCinemaByCityId };
