@@ -1,22 +1,23 @@
 {
-  "name": "cinema-catalog-service",
-  "version": "1.0.0",
-  "description": "Provide cinema catalog info.",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "author": "AndreQuintino",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv-safe": "^8.2.0",
-    "express": "^4.17.1",
-    "helmet": "^4.6.0",
-    "mongodb": "^4.2.1",
-    "morgan": "^1.10.0"
-  },
-  "devDependencies": {
-    "jest": "^27.4.3",
-    "supertest": "^6.1.6"
-  }
+	"name": "cinema-catalog-service",
+	"version": "1.0.0",
+	"description": "Provide cinema catalog info.",
+	"main": "index.js",
+	"scripts": {
+		"start": "node -r dotenv/config index",
+		"test": "jest"
+	},
+	"author": "AndreQuintino",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv-safe": "^8.2.0",
+		"express": "^4.17.1",
+		"helmet": "^4.6.0",
+		"mongodb": "^4.2.1",
+		"morgan": "^1.10.0"
+	},
+	"devDependencies": {
+		"jest": "^27.4.3",
+		"supertest": "^6.1.6"
+	}
 }

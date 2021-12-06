@@ -15,7 +15,7 @@ test('Server Start', async () => {
 });
 
 test('Health Check', async () => {
-	process.env.PORT = 3001;
+	process.env.PORT = 3005;
 
 	const app = await start(apiMock);
 
@@ -25,7 +25,7 @@ test('Health Check', async () => {
 });
 
 test('Error Check', async () => {
-	process.env.PORT = 3002;
+	process.env.PORT = 3006;
 
 	const app = await start(apiMock);
 

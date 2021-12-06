@@ -210,13 +210,13 @@ function getAllCities() {
 }
 
 function getCinemaByCityId(cityId) {
-	if (cityId < 0) return [];
+	if (cityId < 0) return null;
 
 	return cinemaCatalog[cinemaCatalog.length - 1].cinemas;
 }
 
 function getMoviesByCinemaId(cinemaId) {
-	if (cinemaId < 0) return [];
+	if (cinemaId < 0) return null;
 
 	return getCinemaByCityId().map((cinema) => {
 		return {
@@ -231,7 +231,7 @@ function getMoviesByCityId(cityId) {
 }
 
 function getMovieSessionsByCityId(movieId, cityId) {
-	if (movieId < 0 || cityId < 0) return [];
+	if (movieId < 0 || cityId < 0) return null;
 
 	return getCinemaByCityId().map((cinema) => {
 		return {
@@ -240,7 +240,7 @@ function getMovieSessionsByCityId(movieId, cityId) {
 			cinema: cinema.nome,
 			idCinema: cinema._id,
 			sala: cinema.salas[0].nome,
-			sessao: cinemas.salas[0].sessoes[0],
+			sessao: cinema.salas[0].sessoes[0],
 		};
 	});
 }

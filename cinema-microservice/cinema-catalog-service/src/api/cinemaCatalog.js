@@ -9,10 +9,14 @@ module.exports = (
 		getMovieSessionsByCinemaId,
 	}
 ) => {
-	app.get('/cities', async (rep, res, next) => {
-		const cities = await getAllCities();
+	app.get('/cities/:cityId/movies/:movieId', async ({ params }, res, next) => {
+		const { movieId, cityId } = params;
 
-		res.json(cities);
+		const sessions = await getMovieSessionsByCityId(movieId, cityId);
+
+		if (!sessions) return res.sendStatus(404); //! Not Found
+
+		res.json(sessions);
 	});
 
 	app.get('/cities/:cityId/movies', async ({ params }, res, next) => {
@@ -25,16 +29,6 @@ module.exports = (
 		res.json(movies);
 	});
 
-	app.get('/cities/:cityId/movies/:movieId', async ({ params }, res, next) => {
-		const { movieId, cityId } = params;
-
-		const sessions = await getMovieSessionsByCityId(movieId, cityId);
-
-		if (!sessions) return res.sendStatus(404); //! Not Found
-
-		res.json(sessions);
-	});
-
 	app.get('/cities/:cityId/cinemas', async ({ params }, res, next) => {
 		const { cityId } = params;
 
@@ -45,14 +39,10 @@ module.exports = (
 		res.json(cinemas);
 	});
 
-	app.get('/cinemas/:cinemaId/movies', async ({ params }, res, next) => {
-		const { cinemaId } = params;
+	app.get('/cities', async (rep, res, next) => {
+		const cities = await getAllCities();
 
-		const movies = await getMoviesByCinemaId(cinemaId);
-
-		if (!movies) return res.sendStatus(404); //! Not Found
-
-		res.json(movies);
+		res.json(cities);
 	});
 
 	app.get(
@@ -67,4 +57,14 @@ module.exports = (
 			res.json(sessions);
 		}
 	);
+
+	app.get('/cinemas/:cinemaId/movies', async ({ params }, res, next) => {
+		const { cinemaId } = params;
+
+		const movies = await getMoviesByCinemaId(cinemaId);
+
+		if (!movies) return res.sendStatus(404); //! Not Found
+
+		res.json(movies);
+	});
 };
