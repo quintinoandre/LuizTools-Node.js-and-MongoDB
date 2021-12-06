@@ -26,4 +26,18 @@ async function getMoviesPremieres() {
 		.toArray();
 }
 
-module.exports = { getAllMovies, getMovieById, getMoviesPremieres };
+async function addMovie(movie) {
+	const db = await connect();
+
+	const result = await db.collection('movies').insertOne(movie);
+
+	if (result.insertedId) {
+		const _id = result.insertedId;
+
+		return { ...movie, _id };
+	}
+
+	throw new Error('It was not possible to save the movie!');
+}
+
+module.exports = { getAllMovies, getMovieById, getMoviesPremieres, addMovie };

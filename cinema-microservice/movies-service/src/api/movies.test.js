@@ -6,6 +6,7 @@ const repositoryMock = require('../repository/__mocks__/repository');
 
 const httpMethods = {
 	GET: 'GET',
+	POST: 'POST',
 };
 
 let app = null;
@@ -56,4 +57,24 @@ test(`${httpMethods.GET} /movies/premieres 200 OK`, async () => {
 	expect(Array.isArray(response.body)).toBeTruthy();
 
 	expect(response.body.length).toBeTruthy();
+});
+
+test(`${httpMethods.POST} /movies/ 201 OK`, async () => {
+	const movie = {
+		titulo: 'Test Movie',
+		sinopse: 'Test Summary',
+		duracao: 120,
+		dataLancamento: new Date(),
+		imagem: 'image.jpg',
+		categorias: ['Aventura'],
+	};
+
+	const response = await request(app)
+		.post('/movies/')
+		.set('Content-Type', 'application/json')
+		.send(movie);
+
+	expect(response.status).toEqual(201); //* OK
+
+	expect(response.body).toBeTruthy();
 });

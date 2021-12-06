@@ -59,4 +59,8 @@ async function getMoviesPremieres() {
 	return [movies[0]];
 }
 
-module.exports = { getAllMovies, getMovieById, getMoviesPremieres };
+async function addMovie(movie) {
+	return movies[0];
+}
+
+module.exports = { getAllMovies, getMovieById, getMoviesPremieres, addMovie };

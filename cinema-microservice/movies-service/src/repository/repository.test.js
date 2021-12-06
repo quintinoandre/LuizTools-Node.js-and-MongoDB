@@ -2,6 +2,7 @@ const {
 	getAllMovies,
 	getMovieById,
 	getMoviesPremieres,
+	addMovie,
 } = require('./repository');
 const { test, expect } = require('@jest/globals');
 
@@ -43,4 +44,19 @@ test('getMoviePremieres', async () => {
 	expect(movies[0].dataLancamento.getTime()).toBeGreaterThanOrEqual(
 		monthAgo.getTime()
 	);
+});
+
+test('addMovie', async () => {
+	const movie = {
+		titulo: 'Test Movie',
+		sinopse: 'Movie Summary',
+		duracao: 120,
+		dataLancamento: new Date(),
+		imagem: 'image.jpg',
+		categorias: ['Aventura'],
+	};
+
+	const result = await addMovie(movie);
+
+	expect(result).toBeTruthy();
 });

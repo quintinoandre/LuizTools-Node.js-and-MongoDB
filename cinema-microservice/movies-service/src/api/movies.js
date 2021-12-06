@@ -1,4 +1,7 @@
-module.exports = (app, { getMoviesPremieres, getMovieById, getAllMovies }) => {
+module.exports = (
+	app,
+	{ getMoviesPremieres, getMovieById, getAllMovies, addMovie }
+) => {
 	app.get('/movies/premieres', async (rep, res, next) => {
 		const movies = await getMoviesPremieres();
 
@@ -19,5 +22,24 @@ module.exports = (app, { getMoviesPremieres, getMovieById, getAllMovies }) => {
 		const movies = await getAllMovies();
 
 		res.json(movies);
+	});
+
+	app.post('/movies', async ({ body }, res, next) => {
+		let { titulo, sinopse, duracao, dataLancamento, imagem, categorias } = body;
+
+		duracao = parseInt(duracao);
+
+		dataLancamento = new Date(dataLancamento);
+
+		const result = await addMovie({
+			titulo,
+			sinopse,
+			duracao,
+			dataLancamento,
+			imagem,
+			categorias,
+		});
+
+		res.status(201).json(result); //* Created
 	});
 };
