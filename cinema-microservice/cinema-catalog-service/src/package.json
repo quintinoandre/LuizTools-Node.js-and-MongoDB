@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node -r dotenv/config index",
+		"dev": "npx nodemon -r dotenv/config index",
 		"test": "jest"
 	},
 	"author": "AndreQuintino",
