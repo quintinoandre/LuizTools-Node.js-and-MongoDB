@@ -1,7 +1,9 @@
 const {
 	validateMovies,
 	validateToken,
+	validateAdmin,
 } = require('../middlewares/validationMiddleware');
+const logger = require('../config/logger');
 
 module.exports = (
 	app,
@@ -32,10 +34,15 @@ module.exports = (
 	app.post(
 		'/movies',
 		validateToken,
+		validateAdmin,
 		validateMovies,
 		async ({ body }, res, next) => {
 			let { titulo, sinopse, duracao, dataLancamento, imagem, categorias } =
 				body;
+
+			const { locals } = res;
+
+			const { userId } = locals;
 
 			duracao = parseInt(duracao);
 
@@ -50,15 +57,30 @@ module.exports = (
 				categorias,
 			});
 
+			logger.info(
+				`User ${userId} added the movie ${result._id} at ${new Date()}`
+			);
+
 			res.status(201).json(result); //* Created
 		}
 	);
 
-	app.delete('/movies/:id', validateToken, async ({ params }, res, next) => {
-		const { id } = params;
+	app.delete(
+		'/movies/:id',
+		validateToken,
+		validateAdmin,
+		async ({ params }, res, next) => {
+			const { id } = params;
 
-		const result = await deleteMovie(id);
+			const { locals } = res;
 
-		res.sendStatus(204); //* No Content
-	});
+			const { userId } = locals;
+
+			const result = await deleteMovie(id);
+
+			logger.info(`User ${userId} deleted the movie ${id} at ${new Date()}`);
+
+			res.sendStatus(204); //* No Content
+		}
+	);
 };

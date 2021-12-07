@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const { SECRET } = process.env;
 
+const ADMIN_PROFILE = 1;
+
 function validateMovies({ body }, res, next) {
 	const { error } = schema.validate(body);
 
@@ -23,9 +25,11 @@ function validateToken({ headers }, res, next) {
 	token = token.replace('Bearer ', '');
 
 	try {
-		const { userId } = jwt.verify(token, SECRET);
+		const { userId, profileId } = jwt.verify(token, SECRET);
 
 		res.locals.userId = userId;
+
+		res.locals.profileId = profileId;
 
 		next();
 	} catch (err) {
@@ -35,4 +39,13 @@ function validateToken({ headers }, res, next) {
 	}
 }
 
-module.exports = { validateMovies, validateToken };
+function validateAdmin(res, res, next) {
+	const { locals } = res;
+
+	const { profileId } = locals;
+
+	if (parseInt(profileId) === ADMIN_PROFILE) next();
+	else res.sendStatus(403); //! Forbidden
+}
+
+module.exports = { validateMovies, validateToken, validateAdmin };
