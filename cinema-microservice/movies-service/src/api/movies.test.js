@@ -7,6 +7,7 @@ const repositoryMock = require('../repository/__mocks__/repository');
 const httpMethods = {
 	GET: 'GET',
 	POST: 'POST',
+	DELETE: 'DELETE',
 };
 
 let app = null;
@@ -59,7 +60,7 @@ test(`${httpMethods.GET} /movies/premieres 200 OK`, async () => {
 	expect(response.body.length).toBeTruthy();
 });
 
-test(`${httpMethods.POST} /movies/ 201 OK`, async () => {
+test(`${httpMethods.POST} /movies/ 201 Created`, async () => {
 	const movie = {
 		titulo: 'Test Movie',
 		sinopse: 'Test Summary',
@@ -77,4 +78,10 @@ test(`${httpMethods.POST} /movies/ 201 OK`, async () => {
 	expect(response.status).toEqual(201); //* OK
 
 	expect(response.body).toBeTruthy();
+});
+
+test(`${httpMethods.DELETE} /movies/:id 204 No Content`, async () => {
+	const response = await request(app).delete('/movies/1');
+
+	expect(response.status).toEqual(204); //* No Content
 });

@@ -31,13 +31,21 @@ async function addMovie(movie) {
 
 	const result = await db.collection('movies').insertOne(movie);
 
-	if (result.insertedId) {
-		const _id = result.insertedId;
+	const _id = result.insertedId;
 
-		return { ...movie, _id };
-	}
-
-	throw new Error('It was not possible to save the movie!');
+	return { ...movie, _id };
 }
 
-module.exports = { getAllMovies, getMovieById, getMoviesPremieres, addMovie };
+async function deleteMovie(id) {
+	const db = await connect();
+
+	return db.collection('movies').deleteOne({ _id: new ObjectId(id) });
+}
+
+module.exports = {
+	getAllMovies,
+	getMovieById,
+	getMoviesPremieres,
+	addMovie,
+	deleteMovie,
+};

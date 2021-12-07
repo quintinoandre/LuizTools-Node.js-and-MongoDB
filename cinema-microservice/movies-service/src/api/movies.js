@@ -1,6 +1,6 @@
 module.exports = (
 	app,
-	{ getMoviesPremieres, getMovieById, getAllMovies, addMovie }
+	{ getMoviesPremieres, getMovieById, getAllMovies, addMovie, deleteMovie }
 ) => {
 	app.get('/movies/premieres', async (rep, res, next) => {
 		const movies = await getMoviesPremieres();
@@ -41,5 +41,13 @@ module.exports = (
 		});
 
 		res.status(201).json(result); //* Created
+	});
+
+	app.delete('/movies/:id', async ({ params }, res, next) => {
+		const { id } = params;
+
+		const result = await deleteMovie(id);
+
+		res.sendStatus(204); //* No Content
 	});
 };

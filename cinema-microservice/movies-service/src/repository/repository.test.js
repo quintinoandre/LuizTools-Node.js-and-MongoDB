@@ -3,6 +3,7 @@ const {
 	getMovieById,
 	getMoviesPremieres,
 	addMovie,
+	deleteMovie,
 } = require('./repository');
 const { test, expect } = require('@jest/globals');
 
@@ -56,7 +57,30 @@ test('addMovie', async () => {
 		categorias: ['Aventura'],
 	};
 
+	let result;
+
+	try {
+		result = await addMovie(movie);
+
+		expect(result).toBeTruthy();
+	} finally {
+		if (result) await deleteMovie(result._id);
+	}
+});
+
+test('deleteMovie', async () => {
+	const movie = {
+		titulo: 'Test Movie',
+		sinopse: 'Movie Summary',
+		duracao: 120,
+		dataLancamento: new Date(),
+		imagem: 'image.jpg',
+		categorias: ['Aventura'],
+	};
+
 	const result = await addMovie(movie);
 
-	expect(result).toBeTruthy();
+	const result2 = await deleteMovie(result._id);
+
+	expect(result2).toBeTruthy();
 });

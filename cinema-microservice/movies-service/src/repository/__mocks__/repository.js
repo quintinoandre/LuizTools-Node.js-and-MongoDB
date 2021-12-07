@@ -63,4 +63,16 @@ async function addMovie(movie) {
 	return movies[0];
 }
 
-module.exports = { getAllMovies, getMovieById, getMoviesPremieres, addMovie };
+async function deleteMovie(id) {
+	if (!id) throw new Error('Could not delete this movie!');
+
+	return true;
+}
+
+module.exports = {
+	getAllMovies,
+	getMovieById,
+	getMoviesPremieres,
+	addMovie,
+	deleteMovie,
+};
