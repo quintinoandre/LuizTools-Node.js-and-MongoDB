@@ -1,3 +1,5 @@
+const { validateMovies } = require('../middlewares/validationMiddleware');
+
 module.exports = (
 	app,
 	{ getMoviesPremieres, getMovieById, getAllMovies, addMovie, deleteMovie }
@@ -24,7 +26,7 @@ module.exports = (
 		res.json(movies);
 	});
 
-	app.post('/movies', async ({ body }, res, next) => {
+	app.post('/movies', validateMovies, async ({ body }, res, next) => {
 		let { titulo, sinopse, duracao, dataLancamento, imagem, categorias } = body;
 
 		duracao = parseInt(duracao);
