@@ -3,6 +3,7 @@ const httpProxy = require('express-http-proxy');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const { doLogin, doLogout } = require('./authController');
 
 const { MOVIES_API, CATALOG_API, PORT } = process.env;
 
@@ -14,11 +15,17 @@ app.use(helmet());
 
 app.use(cookieParser());
 
+app.use(express.json());
+
 const options = {
 	proxyReqPathResolver: ({ originalUrl }) => {
 		return originalUrl;
 	},
 };
+
+app.post('/login', doLogin);
+
+app.post('/logout', doLogout);
 
 const moviesServiceProxy = httpProxy(MOVIES_API, options);
 
