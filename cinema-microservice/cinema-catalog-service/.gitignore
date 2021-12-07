@@ -1,1 +1,5 @@
 data
+coverge
+node_modules
+.env
+logs

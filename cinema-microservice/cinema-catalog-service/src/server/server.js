@@ -2,6 +2,7 @@ require('express-async-errors');
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const logger = require('../config/logger');
 
 const { MS_NAME } = process.env;
 
@@ -21,7 +22,7 @@ async function start(api, repository) {
 	api(app, repository);
 
 	app.use((error, req, res, next) => {
-		console.error(error);
+		logger.error(error.stack);
 
 		res.sendStatus(500); //! Internal Server Error
 	});

@@ -5,7 +5,7 @@ module.exports = {
 
 	coverageDirectory: 'coverage',
 
-	coveragePathIgnorePatterns: ['/node_modules/'],
+	coveragePathIgnorePatterns: ['/node_modules/', 'logger.js'],
 
 	coverageProvider: 'v8',
 

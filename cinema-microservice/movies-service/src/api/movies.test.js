@@ -42,7 +42,7 @@ test(`${httpMethods.GET} /movies/:id 200 OK`, async () => {
 	expect(response.body).toBeTruthy();
 });
 
-test(`${httpMethods.GET} /movies/:id 404 NOT FOUND`, async () => {
+test(`${httpMethods.GET} /movies/:id 404 Not Found`, async () => {
 	const testMovieId = '-1';
 
 	const response = await request(app).get(`/movies/${testMovieId}`);
@@ -66,7 +66,7 @@ test(`${httpMethods.POST} /movies/ 201 Created`, async () => {
 		sinopse: 'Test Summary',
 		duracao: 120,
 		dataLancamento: new Date(),
-		imagem: 'image.jpg',
+		imagem: 'http://image.jpg',
 		categorias: ['Aventura'],
 	};
 
@@ -78,6 +78,17 @@ test(`${httpMethods.POST} /movies/ 201 Created`, async () => {
 	expect(response.status).toEqual(201); //* OK
 
 	expect(response.body).toBeTruthy();
+});
+
+test(`${httpMethods.POST} /movies/ 422 Unprocessable Entity`, async () => {
+	const movie = {};
+
+	const response = await request(app)
+		.post('/movies/')
+		.set('Content-Type', 'application/json')
+		.send(movie);
+
+	expect(response.status).toEqual(422); //! Unprocessable Entity
 });
 
 test(`${httpMethods.DELETE} /movies/:id 204 No Content`, async () => {
