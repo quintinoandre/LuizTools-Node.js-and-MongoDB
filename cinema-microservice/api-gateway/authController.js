@@ -35,7 +35,11 @@ async function validateToken({ headers }, res, next) {
 }
 
 async function doLogout(req, res, next) {
-	res.send('Logout!');
+	const { locals } = res;
+
+	const { userId } = locals;
+
+	res.send(`Logout userId ${userId}`);
 }
 
 module.exports = { doLogin, doLogout, validateToken };

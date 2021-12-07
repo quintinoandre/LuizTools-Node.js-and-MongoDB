@@ -1,3 +1,5 @@
+const { validateToken } = require('../middlewares/validationMiddleware');
+
 module.exports = (
 	app,
 	{
@@ -9,37 +11,49 @@ module.exports = (
 		getMovieSessionsByCinemaId,
 	}
 ) => {
-	app.get('/cities/:cityId/movies/:movieId', async ({ params }, res, next) => {
-		const { movieId, cityId } = params;
+	app.get(
+		'/cities/:cityId/movies/:movieId',
+		validateToken,
+		async ({ params }, res, next) => {
+			const { movieId, cityId } = params;
 
-		const sessions = await getMovieSessionsByCityId(movieId, cityId);
+			const sessions = await getMovieSessionsByCityId(movieId, cityId);
 
-		if (!sessions) return res.sendStatus(404); //! Not Found
+			if (!sessions) return res.sendStatus(404); //! Not Found
 
-		res.json(sessions);
-	});
+			res.json(sessions);
+		}
+	);
 
-	app.get('/cities/:cityId/movies', async ({ params }, res, next) => {
-		const { cityId } = params;
+	app.get(
+		'/cities/:cityId/movies',
+		validateToken,
+		async ({ params }, res, next) => {
+			const { cityId } = params;
 
-		const movies = await getMoviesByCityId(cityId);
+			const movies = await getMoviesByCityId(cityId);
 
-		if (!movies) return res.sendStatus(404); //! Not Found
+			if (!movies) return res.sendStatus(404); //! Not Found
 
-		res.json(movies);
-	});
+			res.json(movies);
+		}
+	);
 
-	app.get('/cities/:cityId/cinemas', async ({ params }, res, next) => {
-		const { cityId } = params;
+	app.get(
+		'/cities/:cityId/cinemas',
+		validateToken,
+		async ({ params }, res, next) => {
+			const { cityId } = params;
 
-		const cinemas = await getCinemaByCityId(cityId);
+			const cinemas = await getCinemaByCityId(cityId);
 
-		if (!cinemas) return res.sendStatus(404); //! Not Found
+			if (!cinemas) return res.sendStatus(404); //! Not Found
 
-		res.json(cinemas);
-	});
+			res.json(cinemas);
+		}
+	);
 
-	app.get('/cities', async (rep, res, next) => {
+	app.get('/cities', validateToken, async (rep, res, next) => {
 		const cities = await getAllCities();
 
 		res.json(cities);
@@ -47,6 +61,7 @@ module.exports = (
 
 	app.get(
 		'/cinemas/:cinemaId/movies/:movieId',
+		validateToken,
 		async ({ params }, res, next) => {
 			const { movieId, cinemaId } = params;
 
@@ -58,13 +73,17 @@ module.exports = (
 		}
 	);
 
-	app.get('/cinemas/:cinemaId/movies', async ({ params }, res, next) => {
-		const { cinemaId } = params;
+	app.get(
+		'/cinemas/:cinemaId/movies',
+		validateToken,
+		async ({ params }, res, next) => {
+			const { cinemaId } = params;
 
-		const movies = await getMoviesByCinemaId(cinemaId);
+			const movies = await getMoviesByCinemaId(cinemaId);
 
-		if (!movies) return res.sendStatus(404); //! Not Found
+			if (!movies) return res.sendStatus(404); //! Not Found
 
-		res.json(movies);
-	});
+			res.json(movies);
+		}
+	);
 };
