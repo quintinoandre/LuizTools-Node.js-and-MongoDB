@@ -18,7 +18,7 @@ async function getUser(email, password) {
 async function blacklistToken(token) {
 	const db = await connect();
 
-	return db.collection('blacklist').insertOne({ _id: token });
+	return db.collection('blacklist').insertOne({ _id: token, data: new Date() });
 }
 
 async function checkBlacklist(token) {

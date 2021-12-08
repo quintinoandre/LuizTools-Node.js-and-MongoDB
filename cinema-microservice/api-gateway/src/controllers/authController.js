@@ -32,7 +32,7 @@ async function validateBlacklist({ headers }, res, next) {
 
 	token = token.replace('Bearer ', '');
 
-	const isBlacklisted = checkBlacklist(token);
+	const isBlacklisted = await checkBlacklist(token);
 
 	if (isBlacklisted) return res.sendStatus(401); //! Unauthorized
 
