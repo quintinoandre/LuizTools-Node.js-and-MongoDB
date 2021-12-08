@@ -2,6 +2,7 @@ const {
 	doLogin,
 	doLogout,
 	validateToken,
+	validateBlacklist,
 } = require('../controllers/authController');
 const express = require('express');
 const httpProxy = require('express-http-proxy');
@@ -28,6 +29,8 @@ const options = {
 };
 
 app.post('/login', doLogin);
+
+app.use(validateBlacklist);
 
 app.post('/logout', validateToken, doLogout);
 

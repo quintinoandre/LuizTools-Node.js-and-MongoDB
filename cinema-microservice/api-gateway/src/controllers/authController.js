@@ -1,5 +1,9 @@
+const {
+	getUser,
+	checkBlacklist,
+	blacklistToken,
+} = require('../repository/repository');
 const jwt = require('jsonwebtoken');
-const { getUser } = require('../repository/repository');
 
 const { SECRET, EXPIRES } = process.env;
 
@@ -19,6 +23,20 @@ async function doLogin({ body }, res, next) {
 	} catch (err) {
 		res.sendStatus(401); //! Unauthorized
 	}
+}
+
+async function validateBlacklist({ headers }, res, next) {
+	let token = headers['authorization'];
+
+	if (!token) return next();
+
+	token = token.replace('Bearer ', '');
+
+	const isBlacklisted = checkBlacklist(token);
+
+	if (isBlacklisted) return res.sendStatus(401); //! Unauthorized
+
+	next();
 }
 
 async function validateToken({ headers }, res, next) {
@@ -43,12 +61,14 @@ async function validateToken({ headers }, res, next) {
 	}
 }
 
-async function doLogout(req, res, next) {
-	const { locals } = res;
+async function doLogout({ headers }, res, next) {
+	let token = headers['authorization'];
 
-	const { userId } = locals;
+	token = token.replace('Bearer ', '');
 
-	res.send(`Logout userId ${userId}`);
+	await blacklistToken(token);
+
+	res.sendStatus(200); //* OK
 }
 
-module.exports = { doLogin, doLogout, validateToken };
+module.exports = { doLogin, doLogout, validateToken, validateBlacklist };
