@@ -1,25 +1,24 @@
 const jwt = require('jsonwebtoken');
+const { getUser } = require('../repository/repository');
 
 const { SECRET, EXPIRES } = process.env;
 
 async function doLogin({ body }, res, next) {
 	const { email, password } = body;
 
-	if (email === 'contato@luiztools.com.br' && password === '123456') {
-		//ADMIN
-		const token = jwt.sign({ userId: 1, profileId: 1 }, SECRET, {
+	try {
+		const user = await getUser(email, password);
+
+		const { _id: userId, profileId } = user;
+
+		const token = jwt.sign({ userId, profileId }, SECRET, {
 			expiresIn: parseInt(EXPIRES),
 		});
 
 		res.json({ token });
-	} else if (email === 'luizfduartejr@gmail.com' && password === '123456') {
-		//GUEST
-		const token = jwt.sign({ userId: 2, profileId: 2 }, SECRET, {
-			expiresIn: parseInt(EXPIRES),
-		});
-
-		res.json({ token });
-	} else res.sendStatus(401); //! Unauthorized
+	} catch (err) {
+		res.sendStatus(401); //! Unauthorized
+	}
 }
 
 async function validateToken({ headers }, res, next) {

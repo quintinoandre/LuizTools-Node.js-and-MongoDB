@@ -1,9 +1,13 @@
+const {
+	doLogin,
+	doLogout,
+	validateToken,
+} = require('../controllers/authController');
 const express = require('express');
 const httpProxy = require('express-http-proxy');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const { doLogin, doLogout, validateToken } = require('./authController');
 
 const { MOVIES_API, CATALOG_API, PORT } = process.env;
 
