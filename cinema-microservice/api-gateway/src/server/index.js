@@ -3,6 +3,7 @@ const {
 	doLogout,
 	validateToken,
 	validateBlacklist,
+	validateLoginSchema,
 } = require('../controllers/authController');
 const express = require('express');
 const httpProxy = require('express-http-proxy');
@@ -28,7 +29,7 @@ const options = {
 	},
 };
 
-app.post('/login', doLogin);
+app.post('/login', validateLoginSchema, doLogin);
 
 app.use(validateBlacklist);
 
@@ -42,6 +43,8 @@ app.use('/movies', moviesServiceProxy);
 
 app.get(/cities|cinemas/i, catalogServiceProxy);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
 	console.log(`API Gateway started at ${PORT}`);
 });
+
+module.exports = server;

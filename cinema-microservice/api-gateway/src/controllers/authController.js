@@ -39,6 +39,20 @@ async function validateBlacklist({ headers }, res, next) {
 	next();
 }
 
+async function validateLoginSchema({ body }, res, next) {
+	const schema = require('../schemas/login');
+
+	const { error } = schema.validate(body);
+
+	if (error) {
+		const { details } = error;
+
+		return res.status(422).json(details.map((d) => d.message)); //! Unprocessable Entity
+	}
+
+	next();
+}
+
 async function validateToken({ headers }, res, next) {
 	let token = headers['authorization'];
 
@@ -71,4 +85,10 @@ async function doLogout({ headers }, res, next) {
 	res.sendStatus(200); //* OK
 }
 
-module.exports = { doLogin, doLogout, validateToken, validateBlacklist };
+module.exports = {
+	doLogin,
+	doLogout,
+	validateToken,
+	validateBlacklist,
+	validateLoginSchema,
+};
