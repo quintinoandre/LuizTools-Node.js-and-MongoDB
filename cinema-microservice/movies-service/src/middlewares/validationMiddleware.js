@@ -6,8 +6,6 @@ const { SECRET } = process.env;
 const ADMIN_PROFILE = 1;
 
 function validateMovie({ body }, res, next) {
-	if (!body) return res.sendStatus(422); //! Unprocessable Entity
-
 	const { error } = schema.validate(body);
 
 	if (error) {

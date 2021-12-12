@@ -56,6 +56,14 @@ test(`${httpMethods.GET} /movie 401 Unauthorized`, async () => {
 	expect(response.status).toEqual(401); //! Unauthorized
 });
 
+test(`${httpMethods.GET} /movie 401 Unauthorized (token error)`, async () => {
+	const response = await request(app)
+		.get('/movies')
+		.set('authorization', `Bearer 3`);
+
+	expect(response.status).toEqual(401); //! Unauthorized
+});
+
 test(`${httpMethods.GET} /movies/:id 200 OK`, async () => {
 	const testMovieId = '1';
 
