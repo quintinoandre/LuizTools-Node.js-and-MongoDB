@@ -5,7 +5,9 @@ const { SECRET } = process.env;
 
 const ADMIN_PROFILE = 1;
 
-function validateMovies({ body }, res, next) {
+function validateMovie({ body }, res, next) {
+	if (!body) return res.sendStatus(422); //! Unprocessable Entity
+
 	const { error } = schema.validate(body);
 
 	if (error) {
@@ -39,7 +41,7 @@ function validateToken({ headers }, res, next) {
 	}
 }
 
-function validateAdmin(res, res, next) {
+function validateAdmin(req, res, next) {
 	const { locals } = res;
 
 	const { profileId } = locals;
@@ -48,4 +50,8 @@ function validateAdmin(res, res, next) {
 	else res.sendStatus(403); //! Forbidden
 }
 
-module.exports = { validateMovies, validateToken, validateAdmin };
+module.exports = {
+	validateMovie,
+	validateToken,
+	validateAdmin,
+};

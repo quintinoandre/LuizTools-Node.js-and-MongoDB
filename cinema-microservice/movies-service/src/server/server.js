@@ -15,6 +15,8 @@ async function start(api, repository) {
 
 	app.use(morgan('dev'));
 
+	app.use(express.json());
+
 	app.get('/health', (req, res, next) => {
 		res.send(`The service ${MS_NAME} is running at ${process.env.PORT}`);
 	});

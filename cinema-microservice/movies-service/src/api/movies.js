@@ -1,5 +1,5 @@
 const {
-	validateMovies,
+	validateMovie,
 	validateToken,
 	validateAdmin,
 } = require('../middlewares/validationMiddleware');
@@ -35,7 +35,7 @@ module.exports = (
 		'/movies',
 		validateToken,
 		validateAdmin,
-		validateMovies,
+		validateMovie,
 		async ({ body }, res, next) => {
 			let { titulo, sinopse, duracao, dataLancamento, imagem, categorias } =
 				body;
