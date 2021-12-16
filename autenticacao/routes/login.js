@@ -8,9 +8,18 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/login', function ({ query }, res) {
-	const { fail } = query;
+	const { fail, reset } = query;
 
-	if (fail) res.render('login', { message: 'Usuário e/ou senha incorretos!' });
+	if (fail)
+		res.render('login', {
+			message: 'Usuário e/ou senha incorretos!',
+			error: true,
+		});
+	else if (reset)
+		res.render('login', {
+			message: 'A sua nova senha chegará no seu email em instantes!',
+			error: false,
+		});
 	else res.render('login', { message: null });
 });
 
@@ -21,5 +30,11 @@ router.post(
 		failureRedirect: '/login?fail=true',
 	})
 );
+
+router.post('/logoff', function (req, res, next) {
+	req.logOut();
+
+	res.redirect('/login');
+});
 
 module.exports = router;

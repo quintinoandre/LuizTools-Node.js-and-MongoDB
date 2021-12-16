@@ -14,7 +14,11 @@
 
 		<% if(message) {%>
 		<p>
+			<% if(error) {%>
 			<label style="color: Red"><%= message %></label>
+			<%} else {%>
+			<label style="color: Green"><%= message %></label>
+			<%}%>
 		</p>
 		<%}%>
 

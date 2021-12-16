@@ -18,15 +18,36 @@ router.post('/signup', function ({ body }, res, next) {
 	creatUser(username, password, email, (err, result) => {
 		if (err) return res.redirect('users/signup?fail=true');
 		else {
-			let text = 'Obrigado por se cadastrar (fulano), sua senha é {senha}';
-
-			text = text.replace('(fulano)', username).replace('{senha}', password);
+			const text = `Obrigado por se cadastrar ${username}, sua senha é ${password}`;
 
 			require('../mail')(email, 'Cadastro realizado com sucesso!', text);
 
 			res.redirect('/');
 		}
 	});
+});
+
+/* POST users */
+router.post('/forgot', function ({ body }, res, next) {
+	const { resetPassword } = require('../db');
+
+	const { email } = body;
+
+	resetPassword(email, (err, result, newPassword) => {
+		if (result.matchedCount === 0) return res.redirect('/login?reset=true');
+		else {
+			const text = `Olá, sua nova senha é ${newPassword}. Sua senha antiga, não funciona mais!`;
+
+			require('../mail')(email, 'Sua senha foi alterada!', text);
+
+			res.redirect('/login?reset=true');
+		}
+	});
+});
+
+/* GET forgot */
+router.get('/forgot', function (req, res, next) {
+	res.render('forgot', {});
 });
 
 module.exports = router;
