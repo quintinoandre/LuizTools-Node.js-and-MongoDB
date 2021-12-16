@@ -3,7 +3,7 @@ require('dotenv-safe').config();
 
 const { MongoClient } = require('mongodb');
 
-const { MONGO_CONNECTION, MONGO_DB } = process.env;
+const { MONGO_CONNECTION, MONGO_DB, PORT } = process.env;
 
 MongoClient.connect(MONGO_CONNECTION, function (err, conn) {
 	if (err) return console.log(err);
@@ -24,7 +24,7 @@ MongoClient.connect(MONGO_CONNECTION, function (err, conn) {
 	 * Get port from environment and store in Express.
 	 */
 
-	const port = normalizePort(process.env.PORT || '3000');
+	const port = normalizePort(PORT || '3000');
 	app.set('port', port);
 
 	/**
