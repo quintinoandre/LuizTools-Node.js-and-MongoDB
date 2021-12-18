@@ -13,9 +13,9 @@ router.get('/signup', function ({ query }, res, next) {
 router.post('/signup', function ({ body }, res, next) {
 	const { creatUser } = require('../db');
 
-	const { username, password, email } = body;
+	const { username, password, email, profile } = body;
 
-	creatUser(username, password, email, (err, result) => {
+	creatUser(username, password, email, profile, (err, result) => {
 		if (err) return res.redirect('users/signup?fail=true');
 		else {
 			const text = `Obrigado por se cadastrar ${username}, sua senha é ${password}`;

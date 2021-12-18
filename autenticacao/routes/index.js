@@ -7,6 +7,8 @@ router.get(
 	'/:pagina?',
 	global.authenticationMiddleware(),
 	function ({ user, params }, res, next) {
+		const { username, profile } = user;
+
 		const pagina = parseInt(params.pagina || '1');
 
 		countAll((err, qtd) => {
@@ -18,11 +20,12 @@ router.get(
 				if (err) return console.log(err);
 
 				res.render('index', {
-					title: user.username,
+					title: username,
 					docs,
 					qtd,
 					qtdPaginas,
 					pagina,
+					profile,
 				});
 			});
 		});

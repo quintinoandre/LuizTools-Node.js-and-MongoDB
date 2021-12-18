@@ -1,11 +1,14 @@
 const { hashSync } = require('bcryptjs');
 
-function creatUser(username, password, email, callback) {
+function creatUser(username, password, email, profile, callback) {
 	const cryptoPassword = hashSync(password, 10);
 
 	global.db
 		.collection('users')
-		.insertOne({ username, password: cryptoPassword, email }, callback);
+		.insertOne(
+			{ username, password: cryptoPassword, email, profile },
+			callback
+		);
 }
 
 function resetPassword(email, callback) {
