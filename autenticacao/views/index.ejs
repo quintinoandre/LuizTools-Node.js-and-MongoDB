@@ -7,7 +7,40 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <p><%= qtd %> usuários cadastrados</p>
+    <table>
+      <tr style="background-color: Gray;">
+        <td>Nome</td>
+        <td>Ações</td>
+      </tr>
+      <% if (docs){
+        for(let i=0; i<docs.length; i++){ %>
+            <tr>
+              <td><a href="/edit/<%= docs[i]._id %>"><%= docs[i].username %></a></td>
+              <td>
+                <form action='/delete/<%= docs[i]._id %>' method="POST">
+                  <input type="submit" value="Excluir"/>
+                </form>
+              </td>
+            </tr> <%
+        }
+      } %>
+      <tr>
+      <td colspan="2">
+        <% for(let i=1; i<=qtdPaginas; i++){
+            if (pagina === i){ %>
+              <%= i %> | <%
+            } else{ %>
+              <a href="/index/<%= i %>">
+                <%= i %>
+              </a> | <%            
+            }
+          } %>
+      </td>
+      </tr>
+    </table>
     <p>
+      <a href="/users/signup">Cadastrar</a>
       <form action='/logoff' method="POST">
         <input type="submit" value="logoff"/>
       </form>
