@@ -5,8 +5,12 @@ var router = express.Router();
 router.get('/signup', function ({ query }, res, next) {
 	const { fail } = query;
 
-	if (fail) res.render('signup', { message: 'Falha no cadastro do usuário' });
-	else res.render('signup', { message: null });
+	if (fail)
+		res.render('signup', {
+			title: 'Cadastro de Usuários',
+			message: 'Falha no cadastro do usuário',
+		});
+	else res.render('signup', { title: 'Cadastro de Usuários', message: null });
 });
 
 /* POST users */
@@ -47,7 +51,7 @@ router.post('/forgot', function ({ body }, res, next) {
 
 /* GET forgot */
 router.get('/forgot', function (req, res, next) {
-	res.render('forgot', {});
+	res.render('forgot', { title: 'Esqueci minha Senha' });
 });
 
 module.exports = router;

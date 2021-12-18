@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html>
-	<body>
-		<h1>Lembrar senha</h1>
+<%- include top.ejs %>
 
-		<form action="/users/forgot" method="POST">
-			<p>
-				Digite o email de cadastro abaixo para receber novas credenciais de
-				acesso:
-			</p>
-			<input name="email" type="text" />
-			<input type="submit" value="Send" />
-		</form>
+<form action="/users/forgot" method="POST">
+	<p>
+		Digite o email de cadastro abaixo para receber novas credenciais de acesso:
+	</p>
+	<input name="email" type="text" />
+	<input type="submit" value="Send" />
+</form>
 
-		<p>Caso não possua cadastro <a href="/users/signup">clique aqui</a></p>
-	</body>
-</html>
+<p>Caso não possua cadastro <a href="/users/signup">clique aqui</a></p>
+
+<%- include bottom.ejs %>
