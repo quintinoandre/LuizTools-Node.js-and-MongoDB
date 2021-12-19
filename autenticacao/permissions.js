@@ -21,6 +21,7 @@ module.exports = ({ user, originalUrl, method }) => {
 		case '/reports':
 			return isAdmin(profile);
 		default:
-			return false;
+			if (/\/index\/?\d*/g.test(originalUrl)) return true;
+			else return false;
 	}
 };

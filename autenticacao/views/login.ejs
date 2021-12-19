@@ -1,26 +1,52 @@
 <%- include top.ejs %>
 
-<form action="/login" method="POST">
-	<input name="username" type="text" /> <br />
+<div class="col-sm-6">
+	<form action="/login" method="POST">
+		<div class="form-group mb-3">
+			<label for="username">Username</label>
 
-	<input name="password" type="password" /> <br />
+			<input
+				id="username"
+				name="username"
+				type="text"
+				class="form-control"
+				placeholder="Digite seu username"
+			/>
+		</div>
 
-	<input type="submit" value="Login" />
-</form>
+		<div class="form-group mb-3">
+			<label for="password">Password</label>
 
-<% if (message){ %>
-<p>
-	<% if (error){ %>
-	<label style="color: Red"><%= message %></label>
-	<% } else { %>
-	<label style="color: Green"><%= message %></label>
+			<input
+				id="password"
+				name="password"
+				type="password"
+				class="form-control"
+				placeholder="Digite sua password"
+			/>
+		</div>
+
+		<input type="submit" value="Login" class="btn btn-primary" />
+	</form>
+
+	<hr />
+
+	<% if (message){ %>
+	<p>
+		<% if (error){ %>
+			<div class="alert alert-danger">
+		<% } else { %>
+			<div class="alert alert-success">
+		<% } %>
+		<%= message %>
+			</div>
+	</p>
 	<% } %>
-</p>
-<% } %>
 
-<p>
-	<a href="/users/forgot">Esqueceu sua senha?</a> |
-	<a href="/users/signup">Não possui cadastro?</a>
-</p>
+	<p>
+		<a href="/users/forgot">Esqueceu sua senha?</a> |
+		<a href="/users/signup">Não possui cadastro?</a>
+	</p>
+</div>
 
 <%- include bottom.ejs %>

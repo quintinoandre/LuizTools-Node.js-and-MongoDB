@@ -54,10 +54,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', loginRouter);
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/reports', reportsRouter);
+app.use('/', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -72,7 +72,7 @@ app.use(function (err, req, res, next) {
 
 	// render the error page
 	res.status(err.status || 500);
-	res.render('error');
+	res.render('error', { title: 'Erro!' });
 });
 
 module.exports = app;
