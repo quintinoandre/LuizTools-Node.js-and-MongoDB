@@ -9,19 +9,9 @@ module.exports = ({ user, originalUrl, method }) => {
 
 	const { profile } = user;
 
-	switch (originalUrl) {
-		case '/':
-			return true;
-		case '/index':
-			return true;
-		case '/login':
-			return true;
-		case '/signup':
-			return true;
-		case '/reports':
-			return isAdmin(profile);
-		default:
-			if (/\/index\/?\d*/g.test(originalUrl)) return true;
-			else return false;
-	}
+	const ORIGINAL_URL_REGEX = /\/(index\/?\d*|login|signup)/g;
+
+	if (ORIGINAL_URL_REGEX.test(originalUrl)) return true;
+	else if (originalUrl === '/reports') return isAdmin(profile);
+	else return false;
 };
