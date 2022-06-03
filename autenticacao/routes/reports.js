@@ -2,8 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 /* GET reports */
-router.get('/', global.authenticationMiddleware(), function (req, res, next) {
-	res.render('reports', { title: 'Relatórios' });
-});
+router.get(
+  '/',
+  global.authenticationMiddleware(),
+  (request, response, next) => {
+    return response.render('reports', { title: 'Relatórios' });
+  }
+);
 
 module.exports = router;
