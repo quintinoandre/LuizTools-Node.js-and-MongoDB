@@ -37,7 +37,7 @@ router.post(
   })
 );
 
-router.post('/logoff', (request, response, next) => {
+router.post('/logout', (request, response, next) => {
   request.logOut();
 
   return response.redirect('/login');
