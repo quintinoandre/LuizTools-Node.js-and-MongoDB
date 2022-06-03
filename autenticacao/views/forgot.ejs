@@ -1,28 +1,28 @@
 <%- include top.ejs %>
 
 <div class="col-sm-6">
-	<form action="/users/forgot" method="POST">
-		<div class="form-group mb-3">
-			<label for="email">
-				Digite o email de cadastro abaixo para receber novas credenciais de
-				acesso:
-			</label>
+  <form action="/users/forgot" method="POST">
+    <div class="form-group mb-3">
+      <label for="email">
+        Digite o email de registo abaixo para receber novas credenciais de
+        acesso:
+      </label>
 
-			<input
-				id="email"
-				name="email"
-				type="text"
-				class="form-control"
-				placeholder="Digite o seu e-mail"
-			/>
-		</div>
+      <input
+        id="email"
+        name="email"
+        type="text"
+        class="form-control"
+        placeholder="Digite o seu e-mail"
+      />
+    </div>
 
-		<input type="submit" value="Send" class="btn btn-primary" />
-	</form>
+    <input type="submit" value="Send" class="btn btn-primary" />
+  </form>
 
-	<hr />
+  <hr />
 
-	<p>Caso não possua cadastro <a href="/users/signup">clique aqui</a></p>
+  <p>Caso não possua registo <a href="/users/signup">clique aqui</a></p>
 </div>
 
 <%- include bottom.ejs %>

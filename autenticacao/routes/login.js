@@ -3,40 +3,44 @@ const router = express.Router();
 const passport = require('passport');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-	res.render('login', { title: 'Login', message: null });
+router.get('/', (request, response, next) => {
+  return response.render('login', { title: 'Login', message: null });
 });
 
-router.get('/login', function ({ query }, res) {
-	const { fail, reset } = query;
+router.get('/login', (request, response) => {
+  const {
+    query: { fail, reset },
+  } = request;
 
-	if (fail)
-		res.render('login', {
-			title: 'Login',
-			message: 'Usuário e/ou senha incorretos!',
-			error: true,
-		});
-	else if (reset)
-		res.render('login', {
-			title: 'Login',
-			message: 'A sua nova senha chegará no seu email em instantes!',
-			error: false,
-		});
-	else res.render('login', { title: 'Login', message: null });
+  if (fail)
+    return response.render('login', {
+      title: 'Login',
+      message: 'Usuário e/ou password incorretos',
+      error: true,
+    });
+
+  if (reset)
+    return response.render('login', {
+      title: 'Login',
+      message: 'A sua nova password chegará no seu email em instantes',
+      error: false,
+    });
+
+  return response.render('login', { title: 'Login', message: null });
 });
 
 router.post(
-	'/login',
-	passport.authenticate('local', {
-		successRedirect: '/index',
-		failureRedirect: '/login?fail=true',
-	})
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/index',
+    failureRedirect: '/login?fail=true',
+  })
 );
 
-router.post('/logoff', function (req, res, next) {
-	req.logOut();
+router.post('/logoff', (request, response, next) => {
+  request.logOut();
 
-	res.redirect('/login');
+  return response.redirect('/login');
 });
 
 module.exports = router;
