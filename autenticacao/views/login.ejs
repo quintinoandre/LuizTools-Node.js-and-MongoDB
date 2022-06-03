@@ -1,10 +1,8 @@
-<%- include top.ejs %>
-
+<%- include("top.ejs") %>
 <div class="col-sm-6">
 	<form action="/login" method="POST">
 		<div class="form-group mb-3">
 			<label for="username">Username</label>
-
 			<input
 				id="username"
 				name="username"
@@ -13,10 +11,8 @@
 				placeholder="Digite seu username"
 			/>
 		</div>
-
 		<div class="form-group mb-3">
 			<label for="password">Password</label>
-
 			<input
 				id="password"
 				name="password"
@@ -25,12 +21,9 @@
 				placeholder="Digite sua password"
 			/>
 		</div>
-
 		<input type="submit" value="Login" class="btn btn-primary" />
 	</form>
-
 	<hr />
-
 	<% if (message){ %>
 	<p>
 		<% if (error){ %>
@@ -42,11 +35,9 @@
 			</div>
 	</p>
 	<% } %>
-
 	<p>
 		<a href="/users/forgot">Esqueceu sua password?</a> |
 		<a href="/users/signup">Não possui registo?</a>
 	</p>
 </div>
-
-<%- include bottom.ejs %>
+<%- include("bottom.ejs") %>

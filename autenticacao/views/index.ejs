@@ -1,20 +1,15 @@
-<%- include top.ejs %>
-
+<%- include("top.ejs") %>
   <p>Welcome to <%= title %></p>
-
   <div class="alert alert-info">
     <%= qty %> usuários registados
   </div>
-
   <table class="table table-bordered table-striped table-hover">
-
     <thead class="table-dark">
       <tr>
         <th>Nome</th>
         <th>Ações</td>
       </tr>
     </thead>
-
     <tbody>
       <% if (docs){
         for(let i=0; i<docs.length; i++){ %>
@@ -29,9 +24,7 @@
         }
       } %>
     </tbody>
-
   </table>
-
   <nav>
     <ul class="pagination">
       <% for(let i=1; i<=pagesQty; i++){ %>
@@ -39,27 +32,19 @@
       <% } %>
     </ul>
   </nav>
-  
   <form action='/logoff' method="POST">
-
     <div class="btn-group">
       <div class="me-2">
         <a href="/users/signup" class="btn btn-primary">Registar</a>
       </div>
-
       <div class="me-2">
         <input type="submit" value="logoff" class="btn btn-danger form-control"/>
       </div>
-
       <% if (profile === '2'){ %>
         <div class="me-2">
           <a href="/reports" class="btn btn-info">ver relatórios</a>
         </div>
       <% } %>
-
     </div>
-
   </form>
-   
-<%- include bottom.ejs %>
-
+<%- include("bottom.ejs") %>
