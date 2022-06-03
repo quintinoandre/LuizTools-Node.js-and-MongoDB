@@ -2,56 +2,65 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/signup', function ({ query }, res, next) {
-	const { fail } = query;
+router.get('/signup', (request, response, next) => {
+  const {
+    query: { fail },
+  } = request;
 
-	if (fail)
-		res.render('signup', {
-			title: 'Cadastro de Usuários',
-			message: 'Falha no cadastro do usuário',
-		});
-	else res.render('signup', { title: 'Cadastro de Usuários', message: null });
+  if (fail)
+    return response.render('signup', {
+      title: 'Registo de Usuários',
+      message: 'Falha no registo do usuário',
+    });
+
+  return response.render('signup', {
+    title: 'Registo de Usuários',
+    message: null,
+  });
 });
 
 /* POST users */
-router.post('/signup', function ({ body }, res, next) {
-	const { creatUser } = require('../db');
+router.post('/signup', (request, response, next) => {
+  const { creatUser } = require('../db');
 
-	const { username, password, email, profile } = body;
+  const {
+    body: { username, password, email, profile },
+  } = request;
 
-	creatUser(username, password, email, profile, (err, result) => {
-		if (err) return res.redirect('users/signup?fail=true');
-		else {
-			const text = `Obrigado por se cadastrar ${username}, sua senha é ${password}`;
+  creatUser(username, password, email, profile, (error, result) => {
+    if (error) return response.redirect('users/signup?fail=true');
 
-			require('../mail')(email, 'Cadastro realizado com sucesso!', text);
+    const text = `Obrigado por se registar ${username}, sua password é ${password}`;
 
-			res.redirect('/');
-		}
-	});
+    require('../mail')(email, 'Registo realizado com sucesso', text);
+
+    return response.redirect('/');
+  });
 });
 
 /* POST users */
-router.post('/forgot', function ({ body }, res, next) {
-	const { resetPassword } = require('../db');
+router.post('/forgot', (request, response, next) => {
+  const { resetPassword } = require('../db');
 
-	const { email } = body;
+  const {
+    body: { email },
+  } = request;
 
-	resetPassword(email, (err, result, newPassword) => {
-		if (result.matchedCount === 0) return res.redirect('/login?reset=true');
-		else {
-			const text = `Olá, sua nova senha é ${newPassword}. Sua senha antiga, não funciona mais!`;
+  resetPassword(email, (error, result, newPassword) => {
+    if (result.matchedCount === 0)
+      return response.redirect('/login?reset=true');
 
-			require('../mail')(email, 'Sua senha foi alterada!', text);
+    const text = `Olá, sua nova password é ${newPassword}. Sua password antiga, não funciona mais`;
 
-			res.redirect('/login?reset=true');
-		}
-	});
+    require('../mail')(email, 'Sua password foi alterada', text);
+
+    return response.redirect('/login?reset=true');
+  });
 });
 
 /* GET forgot */
-router.get('/forgot', function (req, res, next) {
-	res.render('forgot', { title: 'Esqueci minha Senha' });
+router.get('/forgot', (request, response, next) => {
+  return response.render('forgot', { title: 'Esqueci minha password' });
 });
 
 module.exports = router;
