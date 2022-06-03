@@ -33,21 +33,21 @@ function countAll(callback) {
   global.db.collection('users').countDocuments(callback);
 }
 
-const TAMANHO_PAGINA = 5;
+const PAGE_SIZE = 5;
 
-function findAllUsers(pagina, callback) {
-  const totalSkip = (pagina - 1) * TAMANHO_PAGINA;
+function findAllUsers(page, callback) {
+  const totalSkip = (page - 1) * PAGE_SIZE;
 
   global.db
     .collection('users')
     .find()
     .skip(totalSkip)
-    .limit(TAMANHO_PAGINA)
+    .limit(PAGE_SIZE)
     .toArray(callback);
 }
 
 module.exports = {
-  TAMANHO_PAGINA,
+  PAGE_SIZE,
   creatUser,
   resetPassword,
   resetPassword,

@@ -3,7 +3,7 @@
   <p>Welcome to <%= title %></p>
 
   <div class="alert alert-info">
-    <%= qtd %> usuários registados
+    <%= qty %> usuários registados
   </div>
 
   <table class="table table-bordered table-striped table-hover">
@@ -34,7 +34,7 @@
 
   <nav>
     <ul class="pagination">
-      <% for(let i=1; i<=qtdPaginas; i++){ %>
+      <% for(let i=1; i<=pagesQty; i++){ %>
         <li class="page-item"><a class="page-link" href="/index/<%= i %>"><%= i %></a></li> 
       <% } %>
     </ul>

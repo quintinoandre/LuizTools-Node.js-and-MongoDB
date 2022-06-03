@@ -1,35 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const { findAllUsers, countAll, TAMANHO_PAGINA } = require('../db');
+const { findAllUsers, countAll, PAGE_SIZE } = require('../db');
 
 /* GET home page. */
 router.get(
-	'/:pagina?',
-	global.authenticationMiddleware(),
-	function ({ user, params }, res, next) {
-		const { username, profile } = user;
+  '/:page?',
+  global.authenticationMiddleware(),
+  (request, response, next) => {
+    const {
+      user: { username: title, profile },
+      params,
+    } = request;
 
-		const pagina = parseInt(params.pagina || '1');
+    const page = Number(params.page || '1');
 
-		countAll((err, qtd) => {
-			if (err) return console.log(err);
+    countAll((error, qty) => {
+      if (error) return console.error(error);
 
-			const qtdPaginas = Math.ceil(qtd / TAMANHO_PAGINA);
+      const pagesQty = Math.ceil(qty / PAGE_SIZE);
 
-			findAllUsers(pagina, (err, docs) => {
-				if (err) return console.log(err);
+      findAllUsers(page, (error, docs) => {
+        if (error) return console.error(error);
 
-				res.render('index', {
-					title: username,
-					docs,
-					qtd,
-					qtdPaginas,
-					pagina,
-					profile,
-				});
-			});
-		});
-	}
+        return response.render('index', {
+          title,
+          docs,
+          qty,
+          pagesQty,
+          page,
+          profile,
+        });
+      });
+    });
+  }
 );
 
 module.exports = router;
